@@ -1,16 +1,23 @@
 # Color Picker Plugin for Umbraco
 
+
 This is a simple plugin, where you can pull sliders to get the color, you desire.
 
 
+
+
 ## Features
+
 
 * Get any color from the RGBA scale
 * Use the color anywhere
 * Option to store a color list to use in the TinyMCE content editor
 
 
+
+
 ## Setup
+
 
 1. Take the ColorLibraryApiController.cs file and place it in the APP_Code folder on your Umbraco project
 2. Take the rest of the files and place them in a new folder in APP_Plugins folder called "SingleColorPicker"

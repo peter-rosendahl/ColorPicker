@@ -1,0 +1,29 @@
+﻿{
+  propertyEditors: [
+    {
+    alias: "PRmedia.SingleColorPicker",
+    name: "Single Color Picker",
+    icon: "icon-palette",
+    group: "Pickers",
+    editor: {
+      view: "~/App_Plugins/SingleColorPicker/singleColorPicker.html",
+      valueType: "JSON"
+      },
+		prevalues: {
+			fields: [
+					{
+						label: "WYSIWYG library button",
+						description: "Check this if you want to save the selected color to the wysiwyg library",
+						key: "showAddToLibraryButton",
+						view: "boolean"
+					}
+			]
+		}
+    }
+  ]
+  ,
+  javascript: [
+	'~/App_Plugins/SingleColorPicker/colorLibrary.resource.js',
+    '~/App_Plugins/SingleColorPicker/singleColorPicker.controller.js'
+    ]
+}

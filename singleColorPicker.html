@@ -1,0 +1,237 @@
+﻿<link rel="stylesheet" href="../../Umbraco/lib/jquery-ui/jquery-ui-1.10.4.custom.min.css" />
+<div ng-controller="PRmedia.SingleColorPicker" class="singleColorPickerWrapper">
+    <div class="colorHandles">
+        <div class="singleColor">
+            <div class="colorBar">
+                <p>Rød</p>
+                <input  type="number" min="0" max="255" class="redValue" />
+                <div class="redSlider"></div>
+            </div>
+            <div class="colorBar">
+                <p>Grøn</p>
+                <input  type="number" min="0" max="255" class="greenValue" />
+                <div class="greenSlider"></div>
+            </div>
+            <div class="colorBar">
+                <p>Blå</p>
+                <input  type="number" min="0" max="255" class="blueValue" />
+                <div class="blueSlider"></div>
+            </div>
+            <div class="colorBar">
+                <p>Transparens</p>
+                <input  type="number" min="0" max="1" step="0,01" class="alphaValue" />
+                <div class="alphaSlider"></div>
+            </div>
+            <div class="hexColorBar">
+                <p>HEX-kode</p>
+                <input type="text" class="hexValue" />
+                <input type="text" class="colorName" placeholder="Farvens navn"/>
+                <div class="addToLibrary" ng-click="addColorToLibrary()">Tilføj til bibliotek</div>
+            </div>
+            <div class="colorList">
+                <p>Eksisterende farver</p>
+                <div class="existingColors">
+                    <div ng-repeat="color in listedColors" class="color" ng-click="setColorValue('{{color.HexCode}}')" style="background: {{color.HexCode}};" title="{{color.Name}}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="colorOutput">
+        <div class="colorCode"><input style="display: none;" ng-model="model.value" /></div>
+        <div class="colorBox"></div>
+        <div class="colorTextPreview">
+            <h1>Mary had a little lamb</h1>
+            <h2>Mary had a little lamb</h2>
+            <h3>Mary had a little lamb</h3>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    
+    .singleColorPickerWrapper.ng-scope {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .singleColorPickerWrapper .singleColor {
+        border: 1px solid rgba(0,0,0,0.33);
+        box-sizing: border-box;
+        padding: 15px 30px 15px 15px;
+        margin: 15px 0;
+    }
+
+        .singleColorPickerWrapper .singleColor .redSlider .ui-slider-range {
+            background: #ef2929;
+        }
+        .singleColorPickerWrapper .singleColor .redSlider .ui-slider-handle {
+            border-color: #ef2929;
+        }
+        .singleColorPickerWrapper .singleColor .greenSlider .ui-slider-range {
+            background: #8ae234;
+        }
+        .singleColorPickerWrapper .singleColor .greenSlider .ui-slider-handle {
+            border-color: #8ae234;
+        }
+        .singleColorPickerWrapper .singleColor .blueSlider .ui-slider-range {
+            background: #729fcf;
+        }
+        .singleColorPickerWrapper .singleColor .blueSlider .ui-slider-handle {
+            border-color: #729fcf;
+        }
+        .singleColorPickerWrapper .singleColor .alphaSlider {
+            background: linear-gradient(90deg, rgba(255,255,255,1),rgba(0,0,0,0.75));
+        }
+            .singleColorPickerWrapper .singleColor .alphaSlider .ui-slider-range {
+                background: none;
+            }
+
+    .singleColorPickerWrapper .colorHandles {
+        width: 60%;
+    }
+
+    .singleColorPickerWrapper .colorBar,
+    .singleColorPickerWrapper .hexColorBar {
+        display: flex;
+        width: 100%;
+        margin: 10px 0;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .singleColorPickerWrapper .hexColorBar {
+        justify-content: flex-start;
+        margin: 30px 0 0;
+    }
+        .singleColorPickerWrapper .colorBar p,
+        .singleColorPickerWrapper .hexColorBar p {
+            width: 30%;
+            margin: 0;
+        }
+        .singleColorPickerWrapper .hexColorBar p {
+            text-align: right;
+            margin: 0 10px 0 0;
+            width: initial;
+        }
+
+        .singleColorPickerWrapper .hexColorBar input {
+            margin: 0 20px;
+        }
+
+        .singleColorPickerWrapper .hexColorBar input.hexValue {
+            width: 100px;
+        }
+
+    .singleColorPickerWrapper .colorBar > div {
+        width: 60%;
+    }
+
+    .singleColorPickerWrapper .colorBar input {
+        width: 60px;
+        height: 20px;
+        margin: -2px 15px;
+    }
+
+    .singleColorPickerWrapper .colorOutput {
+        width: 40%;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .singleColorPickerWrapper .colorOutput .colorCode {
+            display: none;
+        }
+
+    .singleColorPickerWrapper .colorBox {
+        width: 80%;
+        height: 80%;
+        display: block;
+        margin: 0;
+        border: 1px solid #ddd;
+        box-shadow: 0px 0px 30px -10px;
+    }
+
+    .singleColorPickerWrapper .otherSettings p {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .singleColorPickerWrapper .otherSettings span.arrow {
+        display: inline-block;
+    }
+
+        .singleColorPickerWrapper .otherSettings span.arrow:after {
+            content: '\f062';
+            font-family: FontAwesome;
+            display: inline-block;
+        }
+
+    .singleColorPickerWrapper .colorTextPreview {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .addToLibrary {
+        display: flex;
+        justify-content: center;
+        width: 200px;
+        padding: 6px 0;
+        box-sizing: initial;
+        margin: 0 0 0 30px;
+        background: rgb(89,170,61);
+        color: #fff;
+        height: 100%;
+    }
+
+        .addToLibrary:hover {
+            background: rgb(89,180,71);
+            cursor: pointer;
+        }
+
+    .existingColors {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+        .existingColors .color {
+            width: 50px;
+            height: 50px;
+            display: block;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+
+    @media all and (max-width:1300px) {
+        .singleColorPickerWrapper.ng-scope {
+            flex-flow: column nowrap;
+            width: 100%;
+        }
+        .singleColorPickerWrapper .colorHandles {
+            width: 100%;
+        }
+        .singleColorPickerWrapper .colorOutput {
+            flex-flow: row wrap;
+            width: 100%;
+            justify-content: space-around;
+        }
+
+        .singleColorPickerWrapper .colorOutput .colorBox {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    @media all and (max-width:767px) {
+        .singleColorPickerWrapper.ng-scope {
+            display: block;
+            clear: both;
+        }
+    }
+
+</style>
